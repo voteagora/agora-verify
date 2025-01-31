@@ -4,7 +4,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export const PrimaryButton = ({ children, ...rest }: Props) => {
+export const ButtonPrimary = ({ children, ...rest }: Props) => {
   return (
     <div
       {...rest}

@@ -1,4 +1,4 @@
-export const AgoraLogo = ({
+export const Agora = ({
   className,
   fill,
 }: {

@@ -1,17 +1,20 @@
 "use client";
 
-import { signIn, useSession, signOut } from "next-auth/react";
-import { AirdropStats } from "@/components/client/AirdropStats";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { AirdropStats } from "@/components/AirdropStats";
 import { Avatar, useModal } from "connectkit";
 import { useAccount, useEnsName } from "wagmi";
-import { PrimaryButton } from "@/components/PrimaryButton";
-import { SecondaryButton } from "@/components/SecondaryButton";
+
+import { ButtonPrimary } from "@/components/ButtonPrimary";
+import { ButtonSecondary } from "@/components/ButtonSecondary";
 
 export const Splash = () => {
-  const { open, setOpen, openProfile } = useModal();
   const { isConnected, address } = useAccount();
+  const { open, setOpen, openProfile } = useModal();
   const { data: name } = useEnsName({ address });
+
   const session = useSession();
+  const hasSession = session.status === "authenticated";
 
   return (
     <div className="border border-line bg-wash p-6 rounded-[24px] max-w-[650px]">
@@ -29,38 +32,41 @@ export const Splash = () => {
         <AirdropStats />
 
         <div className="flex flex-col gap-6">
+          {/*Step 1 - Connect wallet */}
           {isConnected ? (
-            <SecondaryButton
+            <ButtonSecondary
               onClick={() => {
                 openProfile();
               }}
             >
               <Avatar address={address} size={20} />
               <div className="font-medium">{name}</div>
-            </SecondaryButton>
+            </ButtonSecondary>
           ) : (
-            <PrimaryButton
+            <ButtonPrimary
               onClick={() => {
                 setOpen(!open);
               }}
             >
               {"Connect Your Wallet"}
-            </PrimaryButton>
+            </ButtonPrimary>
           )}
+
+          {/*Step 2 - Connect X account */}
           {isConnected && (
             <>
-              {session.data ? (
-                <SecondaryButton onClick={() => signOut()}>
-                  <div className="font-medium">{`@${session.data?.user?.username} has been verified`}</div>
-                </SecondaryButton>
+              {hasSession ? (
+                <ButtonSecondary onClick={() => signOut()}>
+                  <div className="font-medium">{`@${session.data.user.username} has been verified`}</div>
+                </ButtonSecondary>
               ) : (
-                <PrimaryButton
+                <ButtonPrimary
                   onClick={() => {
                     signIn("twitter");
                   }}
                 >
                   {"Verify your account on X"}
-                </PrimaryButton>
+                </ButtonPrimary>
               )}
             </>
           )}

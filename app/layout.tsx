@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
-import { Web3Provider } from "@/components/client/Web3Provider";
+import { Web3Provider } from "@/components/Web3Provider";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",

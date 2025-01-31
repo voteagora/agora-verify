@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-
 import Twitter from "next-auth/providers/twitter";
 
 export const { handlers, auth } = NextAuth({
@@ -12,9 +11,12 @@ export const { handlers, auth } = NextAuth({
   callbacks: {
     async jwt({ token, account, profile }) {
       if (account && profile) {
-        // Extract x account username and id
-        token.username = profile?.data?.username;
-        token.id = profile?.data?.id;
+        // Extract username and id from the Twitter profile and pass it to the JWT token
+        const profileData = profile as {
+          data?: { username?: string; id?: string };
+        };
+        token.username = profileData?.data?.username;
+        token.id = profileData?.data?.id;
       }
       return token;
     },
@@ -28,3 +30,12 @@ export const { handlers, auth } = NextAuth({
     },
   },
 });
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      username?: string;
+      id?: string;
+    };
+  }
+}

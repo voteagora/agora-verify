@@ -1,5 +1,5 @@
 import React from "react";
-import TokenAmountDisplay from "@/components/server/TokenAmountDisplay";
+import TokenAmountDisplay from "@/components/TokenAmountDisplay";
 
 export const AirdropStats = () => {
   return (

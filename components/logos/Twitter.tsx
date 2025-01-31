@@ -1,4 +1,4 @@
-export const XLogo = ({
+export const Twitter = ({
   className,
   fill,
 }: {

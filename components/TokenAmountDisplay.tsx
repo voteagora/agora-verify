@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { formatNumber } from "@/components/utils/utils";
+import { formatNumber } from "@/utils/utils";
 
 export default function TokenAmountDisplay({
   amount,
